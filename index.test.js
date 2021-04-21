@@ -129,15 +129,62 @@ describe('[Exercise 6] Car', () => {
   beforeEach(() => {
     focus = new utils.Car('focus', 20, 30) // each test must start with a fresh car
   })
-  test.todo('[15] driving the car returns the updated odometer')
-  test.todo('[16] driving the car uses gas')
-  test.todo('[17] refueling allows to keep driving')
-  test.todo('[18] adding fuel to a full tank has no effect')
+  test('[15] driving the car returns the updated odometer', () => {
+    const expected = 100;
+    const actual = focus.drive(100);
+    expect(actual).toEqual(expected);
+  });
+  test('[16] driving the car uses gas', () => {
+    const input = 30;
+    const expected = 19;
+    focus.drive(input);
+    expect(focus.tank).toEqual(expected);
+  });
+  test('[17] refueling allows to keep driving', () => {
+    focus.drive(60);
+    focus.refuel(20);
+    focus.drive(30);
+    expect(focus.odometer).toEqual(90);
+  });
+  test('[18] adding fuel to a full tank has no effect', () => {
+    const input = 10;
+    const expected = 20;
+    focus.refuel(input);
+    expect(focus.tank).toEqual(expected);
+  });
 })
 
 describe('[Exercise 7] isEvenNumberAsync', () => {
-  test.todo('[19] resolves true if passed an even number')
-  test.todo('[20] resolves false if passed an odd number')
-  test.todo('[21] rejects an error with the message "number must be a number" if passed a non-number type')
-  test.todo('[22] rejects an error with the message "number must be a number" if passed NaN')
+  test('[19] resolves true if passed an even number', async () => {
+    const input = 200;
+    const expected = true;
+    const actual = await utils.isEvenNumberAsync(input);
+    expect(actual).toEqual(expected);
+  });
+  test('[20] resolves false if passed an odd number', async () => {
+    const input = 353;
+    const expected = false;
+    const actual = await utils.isEvenNumberAsync(input);
+    expect(actual).toEqual(expected);
+  });
+  test('[21] rejects an error with the message "number must be a number" if passed a non-number type', async () => {
+    const input = [];
+    const expected = "number must be a number";
+    try {
+      await utils.isEvenNumberAsync(input);
+    } catch(err) {
+      const actual = err.message;
+      expect(actual).toEqual(expected);
+    }
+  });
+  test('[22] rejects an error with the message "number must be a number" if passed NaN', async () => {
+    const input = NaN;
+    const expected = 'number must be a number';
+    try {
+      await utils.isEvenNumberAsync(input);
+    } catch(err) {
+      const actual = err.message;
+      expect(actual).toEqual(expected);
+    }
+  });
 })
